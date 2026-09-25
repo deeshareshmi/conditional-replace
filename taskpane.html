@@ -1,0 +1,119 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Conditional Replace</title><link rel=stylesheet href=taskpane.css><script src=https://appsforoffice.microsoft.com/lib/1/hosted/office.js></script></head><body>
+    <main class=app-shell>
+      <header class=app-header>
+        <h1>Conditional Replace</h1>
+        <p>Replace text based on the words immediately before or after it.</p>
+      </header>
+
+      <section class=panel aria-labelledby=replacement-heading>
+        <div class=section-heading>
+          <span class=step-number>1</span>
+          <h2 id=replacement-heading>Choose the replacement</h2>
+        </div>
+        <p class=field-help>Enter the text to find and what should replace it.</p>
+
+        <label for=find-text>Find</label>
+        <input id=find-text type=text autocomplete=off>
+
+        <label for=replace-text>Replace with</label>
+        <input id=replace-text type=text autocomplete=off>
+
+        <div class=checkbox-row>
+          <label class=checkbox-label>
+            <input id=match-case type=checkbox>
+            <span>Match case</span>
+          </label>
+          <label class=checkbox-label>
+            <input id=whole-words type=checkbox checked>
+            <span>Whole words</span>
+          </label>
+        </div>
+      </section>
+
+      <section class=panel aria-labelledby=rules-heading>
+        <div class=section-heading>
+          <span class=step-number>2</span>
+          <h2 id=rules-heading>Choose where to replace it</h2>
+        </div>
+        <p id=context-help class=field-help>Use the words immediately before or after the text to include or exclude matches. Enter one phrase per line.</p>
+
+        <section class=context-group aria-labelledby=required-context-heading>
+          <h3 id=required-context-heading>Only replace when...</h3>
+          <p id=required-context-help class=field-help>Leave both fields blank to allow every match.</p>
+
+          <label for=only-before>Preceded by</label>
+          <textarea id=only-before rows=2 aria-describedby="context-help required-context-help"></textarea>
+
+          <label for=only-after>Followed by</label>
+          <textarea id=only-after rows=2 aria-describedby="context-help required-context-help"></textarea>
+
+          <fieldset id=positive-condition-mode class=condition-choice hidden aria-describedby=required-context-summary>
+            <legend>A match is eligible when:</legend>
+            <label class="checkbox-label condition-option">
+              <input id=condition-any type=radio name=positive-condition-mode value=or>
+              <span>At least one filled condition matches</span>
+            </label>
+            <label class="checkbox-label condition-option">
+              <input id=condition-every type=radio name=positive-condition-mode value=and checked>
+              <span>Every filled condition matches</span>
+            </label>
+          </fieldset>
+          <p id=required-context-summary class=rule-summary role=status aria-live=polite aria-atomic=true>No required context. All matches are eligible unless excluded below.</p>
+        </section>
+
+        <section class="context-group exceptions-group" aria-labelledby=exceptions-heading>
+          <h3 id=exceptions-heading>Do not replace when...</h3>
+          <p id=exceptions-help class=field-help>Any phrase entered below will protect that match from replacement, even if it meets the conditions above.</p>
+
+          <label for=exclude-before>Preceded by</label>
+          <textarea id=exclude-before rows=2 aria-describedby="context-help exceptions-help"></textarea>
+
+          <label for=exclude-after>Followed by</label>
+          <textarea id=exclude-after rows=2 aria-describedby="context-help exceptions-help"></textarea>
+        </section>
+      </section>
+
+      <section class="panel review-panel" aria-labelledby=review-heading>
+        <div class=section-heading>
+          <span class=step-number>3</span>
+          <h2 id=review-heading>Review and replace</h2>
+        </div>
+        <p class=field-help>Preview the matches and choose which ones to replace.</p>
+
+        <div class=preview-actions>
+          <button id=preview-button class=primary-button type=button>Preview matches</button>
+          <p id=status-message class=status-message role=status aria-live=polite>No document changes are made during preview.</p>
+        </div>
+
+        <div id=results-section class=results-panel hidden aria-label="Match results">
+          <div class=results-title-row>
+            <h3>Matches</h3>
+            <span id=result-count class=count-badge></span>
+          </div>
+
+          <div class=selection-actions>
+            <button id=select-all-button class=text-button type=button>Select eligible</button>
+            <button id=select-none-button class=text-button type=button>Select none</button>
+          </div>
+
+          <div id=result-list class=result-list></div>
+
+          <div class=replace-bar>
+            <div>
+              <strong id=selected-count>0 selected</strong>
+              <span>Excluded matches cannot be selected.</span>
+            </div>
+            <button id=replace-button class=primary-button type=button disabled>Replace selected</button>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        Current scope: main document body. Headers, footnotes, comments and text boxes are not changed in this version.
+      </footer>
+    </main>
+
+    <script src=taskpane.js></script>
+  
+
+</body></html>
